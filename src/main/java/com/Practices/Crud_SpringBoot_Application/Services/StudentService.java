@@ -13,8 +13,10 @@ public class StudentService {
     }
 
     public student createStudent(student studentRequest) {
+        System.out.println("Inside StudentRepository createStudent");
        student studentresponse=
                studentRepository.saveStudent(studentRequest);
+        System.out.println("exiting StudentRepository createStudent");
         // Implementation for creating a student
         return studentresponse;
     }
