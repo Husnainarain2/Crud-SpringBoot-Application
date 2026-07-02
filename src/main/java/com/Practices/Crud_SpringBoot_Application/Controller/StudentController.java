@@ -35,6 +35,7 @@ public class StudentController {
 
         return ResponseEntity.ok(studentreadResp);
     }
+    // Read all student record method
     @GetMapping("/getAll")
     public ResponseEntity<List<student>> getAllStudents(){
         List<student> studentList=
@@ -43,6 +44,18 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(studentList);
+    }
+
+    // Uodate student record method
+    @PutMapping("/update/{id}")
+    public ResponseEntity<student> updateStudent(@PathVariable Long id , @RequestBody student student){
+        student updateStudent=
+                studentService.updateStudent(id
+                        ,student);
+        if (updateStudent==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updateStudent);
     }
 
 }

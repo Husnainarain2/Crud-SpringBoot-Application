@@ -2,6 +2,7 @@ package com.Practices.Crud_SpringBoot_Application.Services;
 
 import com.Practices.Crud_SpringBoot_Application.Entity.student;
 import com.Practices.Crud_SpringBoot_Application.Repository.StudentRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,21 @@ public class StudentService {
     public List<student> getAllStudent(){
         List<student> studentList=studentRepository.findAll();
         return studentList;
+    }
+    public  student updateStudent(Long id, student studentRequest) {
+        Optional<student> existingStudent= studentRepository.findById(id);
+                studentRepository.findById(id);
+        if (existingStudent.isEmpty()){
+            return null;
+        }
+        student toUpdate=existingStudent.get();
+        toUpdate.setFirstName(studentRequest.getFirstName());
+        toUpdate.setLastName(studentRequest.getLastName());
+        toUpdate.setAge(studentRequest.getAge());
+        toUpdate.setAddress(studentRequest.getAddress());
+        toUpdate.setEmail(studentRequest.getEmail());
+        toUpdate.setPhone(studentRequest.getPhone());
+
+        return studentRepository.save(toUpdate);
     }
 }
