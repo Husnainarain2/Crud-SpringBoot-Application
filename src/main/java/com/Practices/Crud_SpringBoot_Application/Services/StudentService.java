@@ -51,4 +51,13 @@ public class StudentService {
 
         return studentRepository.save(toUpdate);
     }
+    public  boolean deleteStudent(Long id) {
+        boolean isStudent=
+                studentRepository.existsById(id);
+        if (!isStudent){
+            return false;
+        }
+        studentRepository.deleteById(id);
+        return true;
+    }
 }
