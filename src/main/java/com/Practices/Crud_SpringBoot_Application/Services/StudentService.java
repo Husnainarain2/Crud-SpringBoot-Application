@@ -5,6 +5,7 @@ import com.Practices.Crud_SpringBoot_Application.Repository.StudentRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,5 +29,9 @@ public class StudentService {
             return optionalStudent.get();
         }
         return null;
+    }
+    public List<student> getAllStudent(){
+        List<student> studentList=studentRepository.findAll();
+        return studentList;
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/student")
 public class StudentController {
@@ -32,6 +34,15 @@ public class StudentController {
         }
 
         return ResponseEntity.ok(studentreadResp);
+    }
+    @GetMapping("/getAll")
+    public ResponseEntity<List<student>> getAllStudents(){
+        List<student> studentList=
+                studentService.getAllStudent();
+        if (studentList==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(studentList);
     }
 
 }
