@@ -22,4 +22,16 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
     }
 
+    // Read only one student method
+    @GetMapping("/get/{id}")
+    public ResponseEntity<student> getStudent(@PathVariable Long id){
+        student studentreadResp= studentService.getStudent(id);
+
+        if (studentreadResp==null){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(studentreadResp);
+    }
+
 }
