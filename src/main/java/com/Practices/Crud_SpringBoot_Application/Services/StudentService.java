@@ -60,4 +60,12 @@ public class StudentService {
         studentRepository.deleteById(id);
         return true;
     }
+    public boolean deleteAllStudent() {
+
+        if (studentRepository.count()==0){
+            return false;
+        }
+        studentRepository.deleteAll();
+        return true;
+    }
 }

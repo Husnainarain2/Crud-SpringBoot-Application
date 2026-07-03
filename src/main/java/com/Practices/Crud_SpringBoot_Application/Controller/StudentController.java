@@ -67,5 +67,16 @@ public class StudentController {
         }
         return ResponseEntity.ok("Deleted");
     }
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteAllStudents(){
+        boolean studentList=
+                studentService.deleteAllStudent();
+        if (!studentList){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No students found to delete.");
+        }
+        return ResponseEntity.ok("All students " +
+                "deleted Successfully");
+    }
 
 }
