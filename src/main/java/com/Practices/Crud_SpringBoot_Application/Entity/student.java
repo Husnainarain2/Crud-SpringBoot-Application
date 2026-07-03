@@ -17,6 +17,15 @@ public class student {
     private String course;
     private Long phone;
     private String address;
+    private boolean deleted;
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public String getFirstName() {
         return firstName;

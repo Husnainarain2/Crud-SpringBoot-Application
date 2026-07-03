@@ -67,6 +67,7 @@ public class StudentController {
         }
         return ResponseEntity.ok("Deleted");
     }
+    //Hard Delete all student record method
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteAllStudents(){
         boolean studentList=
@@ -77,6 +78,16 @@ public class StudentController {
         }
         return ResponseEntity.ok("All students " +
                 "deleted Successfully");
+    }
+  // soft Deleted
+    @PatchMapping("/soft-delete/{id}")
+    public ResponseEntity<String> softDeleteStudent(@PathVariable Long id) {
+        boolean softDeleted = studentService.softDeleteStudent(id);
+        if (!softDeleted) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No students found to delete.");
+        }
+        return ResponseEntity.ok("Student soft deleted successfully.");
+
     }
 
 }

@@ -17,27 +17,31 @@ public class StudentService {
     }
 
     public student createStudent(student studentRequest) {
-
+        studentRequest.setDeleted(false);
        student studentresponse=
                studentRepository.save(studentRequest);
 
-        // Implementation for creating a student
         return studentresponse;
     }
+    // findByIdAndDeletedIsFalse = Query -->
+    // Select * from student where id=? and deleted=false
     public student getStudent(Long id){
-        Optional<student> optionalStudent= studentRepository.findById(id);
+        Optional<student> optionalStudent=
+                studentRepository.findByIdAndDeletedIsFalse(id);
         if (optionalStudent.isPresent()){
             return optionalStudent.get();
         }
         return null;
     }
     public List<student> getAllStudent(){
-        List<student> studentList=studentRepository.findAll();
+        List<student> studentList=
+                studentRepository.findByDeletedIsFalse();
         return studentList;
     }
     public  student updateStudent(Long id, student studentRequest) {
-        Optional<student> existingStudent= studentRepository.findById(id);
-                studentRepository.findById(id);
+        Optional<student> existingStudent=
+                studentRepository.findByIdAndDeletedIsFalse(id);
+
         if (existingStudent.isEmpty()){
             return null;
         }
@@ -48,9 +52,10 @@ public class StudentService {
         toUpdate.setAddress(studentRequest.getAddress());
         toUpdate.setEmail(studentRequest.getEmail());
         toUpdate.setPhone(studentRequest.getPhone());
-
+        toUpdate.setDeleted(false);
         return studentRepository.save(toUpdate);
     }
+
     public  boolean deleteStudent(Long id) {
         boolean isStudent=
                 studentRepository.existsById(id);
@@ -60,6 +65,7 @@ public class StudentService {
         studentRepository.deleteById(id);
         return true;
     }
+
     public boolean deleteAllStudent() {
 
         if (studentRepository.count()==0){
@@ -68,4 +74,19 @@ public class StudentService {
         studentRepository.deleteAll();
         return true;
     }
+
+    public boolean softDeleteStudent(Long id) {
+        Optional<student> existingStudent=
+                studentRepository.findByIdAndDeletedIsFalse(id);
+
+        if (existingStudent.isEmpty()){
+            return false;
+        }
+        student toUpdate=existingStudent.get();
+        toUpdate.setDeleted(true);
+        studentRepository.save(toUpdate);
+        return true;
+    }
+
+
 }
