@@ -20,8 +20,8 @@ public class StudentService {
         studentRequest.setDeleted(false);
        student studentresponse=
                studentRepository.save(studentRequest);
+       return studentresponse;
 
-        return studentresponse;
     }
     // findByIdAndDeletedIsFalse = Query -->
     // Select * from student where id=? and deleted=false
