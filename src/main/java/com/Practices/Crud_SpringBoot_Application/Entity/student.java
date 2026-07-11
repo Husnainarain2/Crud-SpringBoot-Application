@@ -1,6 +1,8 @@
 package com.Practices.Crud_SpringBoot_Application.Entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.math.BigInteger;
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 public class student {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String firstName;
     private String lastName;

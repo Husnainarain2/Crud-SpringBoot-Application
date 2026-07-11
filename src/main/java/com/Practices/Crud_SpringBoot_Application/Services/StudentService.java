@@ -99,7 +99,9 @@ public class StudentService {
          student.setEmail(studentRequest.getEmail());
      student.setCreatedAt(LocalDateTime.now());
      student.setUpdatedAt(LocalDateTime.now());
-         return student;
+     student.setCourse("Spring Boot");
+     student.setGender("Male");
+     return student;
  }
  private CreateStudentResponseDto mapToDto(student student) {
         CreateStudentResponseDto responseDto=new CreateStudentResponseDto();
@@ -109,6 +111,7 @@ public class StudentService {
         responseDto.setAddress(student.getAddress());
         responseDto.setEmail(student.getEmail());
         responseDto.setPhone(student.getPhone());
+        responseDto.setId(student.getId());
         responseDto.setMessage("Student created successfully");
         return responseDto;
  }
