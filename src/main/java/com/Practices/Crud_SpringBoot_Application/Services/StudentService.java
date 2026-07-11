@@ -1,11 +1,14 @@
 package com.Practices.Crud_SpringBoot_Application.Services;
 
+import com.Practices.Crud_SpringBoot_Application.Dto.CreateStudentResponseDto;
+import com.Practices.Crud_SpringBoot_Application.Dto.CreateStudentResquestDto;
 import com.Practices.Crud_SpringBoot_Application.Entity.student;
 import com.Practices.Crud_SpringBoot_Application.Repository.StudentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +19,11 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public student createStudent(student studentRequest) {
-        studentRequest.setDeleted(false);
-       student studentresponse=
-               studentRepository.save(studentRequest);
-       return studentresponse;
+    public CreateStudentResponseDto createStudent(CreateStudentResquestDto studentRequest) {
 
+        student student=mapToEntity(studentRequest);
+        student savedStudent=studentRepository.save(student);
+        return mapToDto(savedStudent);
     }
     // findByIdAndDeletedIsFalse = Query -->
     // Select * from student where id=? and deleted=false
@@ -88,5 +90,29 @@ public class StudentService {
         return true;
     }
 
+ private student mapToEntity(CreateStudentResquestDto studentRequest) {
+ student student=new student();
+         student.setFirstName(studentRequest.getFirstName());
+         student.setLastName(studentRequest.getLastName());
+         student.setAge(studentRequest.getAge());
+         student.setDeleted(false);
+         student.setEmail(studentRequest.getEmail());
+     student.setCreatedAt(LocalDateTime.now());
+     student.setUpdatedAt(LocalDateTime.now());
+         return student;
+ }
+ private CreateStudentResponseDto mapToDto(student student) {
+        CreateStudentResponseDto responseDto=new CreateStudentResponseDto();
+        responseDto.setFirstName(student.getFirstName());
+        responseDto.setLastName(student.getLastName());
+        responseDto.setAge(student.getAge());
+        responseDto.setAddress(student.getAddress());
+        responseDto.setEmail(student.getEmail());
+        responseDto.setPhone(student.getPhone());
+        responseDto.setMessage("Student created successfully");
+        return responseDto;
+ }
+
 
 }
+

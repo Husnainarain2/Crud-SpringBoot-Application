@@ -1,5 +1,6 @@
 package com.Practices.Crud_SpringBoot_Application.Controller;
 
+import com.Practices.Crud_SpringBoot_Application.Dto.CreateStudentResquestDto;
 import com.Practices.Crud_SpringBoot_Application.Entity.student;
 import com.Practices.Crud_SpringBoot_Application.Services.StudentService;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<student> createStudent(@RequestBody student student){
+    public ResponseEntity<student> createStudent(@RequestBody CreateStudentResquestDto resquestDto){
 
-       student createdStudent= studentService.createStudent(student);
+        CreateStudentResquestDto createdStudent= studentService.createStudent(resquestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
     }
 
