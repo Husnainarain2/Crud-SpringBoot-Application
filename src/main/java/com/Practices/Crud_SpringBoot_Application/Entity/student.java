@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+
 @Entity
 public class student {
 
@@ -18,6 +20,28 @@ public class student {
     private Long phone;
     private String address;
     private boolean deleted;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public boolean getDeleted() {
         return deleted;
