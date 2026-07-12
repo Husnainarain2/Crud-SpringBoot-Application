@@ -112,6 +112,8 @@ public class StudentService {
         responseDto.setEmail(student.getEmail());
         responseDto.setPhone(student.getPhone());
         responseDto.setId(student.getId());
+        responseDto.setCreatedAt(student.getCreatedAt());
+        responseDto.setUpdatedAt(student.getUpdatedAt());
         responseDto.setMessage("Student created successfully");
         return responseDto;
  }
