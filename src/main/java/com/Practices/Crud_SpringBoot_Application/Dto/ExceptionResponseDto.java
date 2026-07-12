@@ -8,6 +8,14 @@ public class ExceptionResponseDto {
     private String error;
     private String message;
 
+    public ExceptionResponseDto(LocalDateTime timestamp, int statusCode, String error, String message, String path) {
+        this.timestamp = timestamp;
+        this.statusCode = statusCode;
+        this.error = error;
+        this.message = message;
+        this.path = path;
+    }
+
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
