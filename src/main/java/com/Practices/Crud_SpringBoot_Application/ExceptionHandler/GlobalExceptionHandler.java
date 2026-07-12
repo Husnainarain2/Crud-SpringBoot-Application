@@ -24,6 +24,19 @@ public ResponseEntity<ExceptionResponseDto> handleResourceNotFoundException(Http
             status(HttpStatus.NOT_FOUND).
             body(responseDto);
 }
+@ExceptionHandler(DuplicatedResouceException.class)
+public ResponseEntity<ExceptionResponseDto> handleDuplicatedResourceException(HttpServletRequest req, DuplicatedResouceException ex){
+    ExceptionResponseDto responseDto=new ExceptionResponseDto(
+            LocalDateTime.now(),
+            HttpStatus.CONFLICT.value(),
+            HttpStatus.CONFLICT.getReasonPhrase(),
+            ex.getMessage(),
+            req.getRequestURI()
+    );
+    return ResponseEntity.
+            status(HttpStatus.CONFLICT).
+            body(responseDto);
+}
 
 @ExceptionHandler(RuntimeException.class)
 public ResponseEntity<ExceptionResponseDto> runtimeExceptionHandler(HttpServletRequest req,RuntimeException ex){
