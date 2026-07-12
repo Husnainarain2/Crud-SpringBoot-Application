@@ -19,7 +19,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<CreateStudentResponseDto> createStudent(@RequestBody CreateStudentResquestDto resquestDto){
 
         CreateStudentResponseDto createdStudent= studentService.createStudent(resquestDto);
@@ -27,7 +27,7 @@ public class StudentController {
     }
 
     // Read only one student method
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<student> getStudent(@PathVariable Long id){
         student studentreadResp= studentService.getStudent(id);
 
@@ -38,7 +38,7 @@ public class StudentController {
         return ResponseEntity.ok(studentreadResp);
     }
     // Read all student record method
-    @GetMapping("/getAll")
+    @GetMapping
     public ResponseEntity<List<student>> getAllStudents(){
         List<student> studentList=
                 studentService.getAllStudent();
@@ -49,7 +49,7 @@ public class StudentController {
     }
 
     // Uodate student record method
-    @PutMapping("/update/{id}")
+    @PutMapping
     public ResponseEntity<student> updateStudent(@PathVariable Long id , @RequestBody student student){
         student updateStudent=
                 studentService.updateStudent(id
@@ -60,7 +60,7 @@ public class StudentController {
         return ResponseEntity.ok(updateStudent);
     }
     // Delete method
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id){
         boolean isDelete=
                 studentService.deleteStudent(id);
@@ -70,7 +70,7 @@ public class StudentController {
         return ResponseEntity.ok("Deleted");
     }
     //Hard Delete all student record method
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public ResponseEntity<String> deleteAllStudents(){
         boolean studentList=
                 studentService.deleteAllStudent();
