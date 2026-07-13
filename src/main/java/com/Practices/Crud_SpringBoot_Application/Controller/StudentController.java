@@ -4,6 +4,7 @@ import com.Practices.Crud_SpringBoot_Application.Dto.CreateStudentResponseDto;
 import com.Practices.Crud_SpringBoot_Application.Dto.CreateStudentResquestDto;
 import com.Practices.Crud_SpringBoot_Application.Entity.student;
 import com.Practices.Crud_SpringBoot_Application.Services.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateStudentResponseDto> createStudent(@RequestBody CreateStudentResquestDto resquestDto){
+    public ResponseEntity<CreateStudentResponseDto> createStudent(@Valid @RequestBody CreateStudentResquestDto resquestDto){
 
         CreateStudentResponseDto createdStudent= studentService.createStudent(resquestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
@@ -28,19 +29,16 @@ public class StudentController {
 
     // Read only one student method
     @GetMapping("/{id}")
-    public ResponseEntity<student> getStudent(@PathVariable Long id){
-        student studentreadResp= studentService.getStudent(id);
-
-        if (studentreadResp==null){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<CreateStudentResponseDto> getStudent(@PathVariable Long id){
+        CreateStudentResponseDto studentreadResp=
+                studentService.getStudent(id);
 
         return ResponseEntity.ok(studentreadResp);
     }
     // Read all student record method
     @GetMapping
-    public ResponseEntity<List<student>> getAllStudents(){
-        List<student> studentList=
+    public ResponseEntity<List<CreateStudentResponseDto>> getAllStudents(){
+        List<CreateStudentResponseDto> studentList=
                 studentService.getAllStudent();
         if (studentList==null){
             return ResponseEntity.notFound().build();

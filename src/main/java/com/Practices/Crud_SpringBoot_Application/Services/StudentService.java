@@ -3,6 +3,8 @@ package com.Practices.Crud_SpringBoot_Application.Services;
 import com.Practices.Crud_SpringBoot_Application.Dto.CreateStudentResponseDto;
 import com.Practices.Crud_SpringBoot_Application.Dto.CreateStudentResquestDto;
 import com.Practices.Crud_SpringBoot_Application.Entity.student;
+import com.Practices.Crud_SpringBoot_Application.ExceptionHandler.DuplicatedResouceException;
+import com.Practices.Crud_SpringBoot_Application.ExceptionHandler.ResourcesNotFoundException;
 import com.Practices.Crud_SpringBoot_Application.Repository.StudentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -22,23 +24,25 @@ public class StudentService {
     public CreateStudentResponseDto createStudent(CreateStudentResquestDto studentRequest) {
 
         student student=mapToEntity(studentRequest);
+        if (emailExists(student)){
+            throw new DuplicatedResouceException("Student with email " + student.getEmail() + " already exists");
+        }
         student savedStudent=studentRepository.save(student);
         return mapToDto(savedStudent);
     }
-    // findByIdAndDeletedIsFalse = Query -->
-    // Select * from student where id=? and deleted=false
-    public student getStudent(Long id){
-        Optional<student> optionalStudent=
-                studentRepository.findByIdAndDeletedIsFalse(id);
-        if (optionalStudent.isPresent()){
-            return optionalStudent.get();
-        }
-        return null;
+    public CreateStudentResponseDto getStudent(Long id){
+       student studentRsp=
+               studentRepository.findById(id).orElseThrow(()->
+                       new ResourcesNotFoundException("Student with id " + id + " not found"));
+
+        return mapToDto(studentRsp);
     }
-    public List<student> getAllStudent(){
+    public List<CreateStudentResponseDto> getAllStudent(){
         List<student> studentList=
                 studentRepository.findByDeletedIsFalse();
-        return studentList;
+        return studentList.
+                stream().map(this::mapToDto).
+                toList();
     }
     public  student updateStudent(Long id, student studentRequest) {
         Optional<student> existingStudent=
@@ -118,6 +122,9 @@ public class StudentService {
         return responseDto;
  }
 
+ private boolean emailExists(student student) {
+        return studentRepository.existsByEmail(student.getEmail());
+    }
 
 }
 
