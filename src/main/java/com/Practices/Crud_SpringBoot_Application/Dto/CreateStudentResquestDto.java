@@ -1,6 +1,10 @@
 package com.Practices.Crud_SpringBoot_Application.Dto;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
 public class CreateStudentResquestDto {
+
+    @NotBlank(message = "Name cannot be null/Empty or blank")
     private String firstName;
     private String lastName;
     private String email;

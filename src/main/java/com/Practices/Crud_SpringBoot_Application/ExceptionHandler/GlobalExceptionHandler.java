@@ -1,13 +1,17 @@
 package com.Practices.Crud_SpringBoot_Application.ExceptionHandler;
 
 import com.Practices.Crud_SpringBoot_Application.Dto.ExceptionResponseDto;
+import com.Practices.Crud_SpringBoot_Application.Dto.ValidationExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GlobalExceptionHandler {
 
@@ -35,6 +39,27 @@ public ResponseEntity<ExceptionResponseDto> handleDuplicatedResourceException(Ht
     );
     return ResponseEntity.
             status(HttpStatus.CONFLICT).
+            body(responseDto);
+}
+
+@ExceptionHandler(MethodArgumentNotValidException.class)
+public ResponseEntity<ValidationExceptionResponse> handleValidationException(HttpServletRequest req, MethodArgumentNotValidException ex) {
+    Map<String, String> fieldErrors = new HashMap<>();
+    ex.getBindingResult().getFieldErrors()
+            .forEach(error ->
+                    fieldErrors.put(error.getField(),
+                            error.getDefaultMessage()));
+
+    ValidationExceptionResponse responseDto = new ValidationExceptionResponse(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            HttpStatus.BAD_REQUEST.getReasonPhrase(),
+            ex.getMessage(),
+            req.getRequestURI(),
+            fieldErrors
+    );
+    return ResponseEntity.
+            status(HttpStatus.BAD_REQUEST).
             body(responseDto);
 }
 
