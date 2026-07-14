@@ -2,6 +2,8 @@ package com.Practices.Crud_SpringBoot_Application.Controller;
 
 import com.Practices.Crud_SpringBoot_Application.Dto.CreateStudentResponseDto;
 import com.Practices.Crud_SpringBoot_Application.Dto.CreateStudentResquestDto;
+import com.Practices.Crud_SpringBoot_Application.Dto.UpdateStudentRequestDto;
+import com.Practices.Crud_SpringBoot_Application.Dto.UpdateStudentResponseDto;
 import com.Practices.Crud_SpringBoot_Application.Entity.student;
 import com.Practices.Crud_SpringBoot_Application.Services.StudentService;
 import jakarta.validation.Valid;
@@ -47,24 +49,18 @@ public class StudentController {
     }
 
     // Uodate student record method
-    @PutMapping
-    public ResponseEntity<student> updateStudent(@PathVariable Long id , @RequestBody student student){
-        student updateStudent=
-                studentService.updateStudent(id
-                        ,student);
-        if (updateStudent==null){
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping("/{id}")
+    public ResponseEntity<UpdateStudentResponseDto> updateStudent(@PathVariable Long id , @RequestBody UpdateStudentRequestDto student){
+        UpdateStudentResponseDto updateStudent=
+                studentService.updateStudent(id,student);
         return ResponseEntity.ok(updateStudent);
     }
     // Delete method
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id){
-        boolean isDelete=
-                studentService.deleteStudent(id);
-        if (!isDelete){
-            return ResponseEntity.notFound().build();
-        }
+
+        studentService.deleteStudent(id);
+
         return ResponseEntity.ok("Deleted");
     }
     //Hard Delete all student record method
@@ -82,10 +78,8 @@ public class StudentController {
   // soft Deleted
     @PatchMapping("/soft-delete/{id}")
     public ResponseEntity<String> softDeleteStudent(@PathVariable Long id) {
-        boolean softDeleted = studentService.softDeleteStudent(id);
-        if (!softDeleted) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No students found to delete.");
-        }
+       studentService.softDeleteStudent(id);
+
         return ResponseEntity.ok("Student soft deleted successfully.");
 
     }

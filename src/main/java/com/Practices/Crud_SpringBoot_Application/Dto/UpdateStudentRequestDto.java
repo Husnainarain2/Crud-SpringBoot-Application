@@ -5,6 +5,7 @@ public class UpdateStudentRequestDto {
     private String lastName;
     private String email;
     private String course;
+    private String message;
 
     public String getFirstName() {
         return firstName;
@@ -36,5 +37,13 @@ public class UpdateStudentRequestDto {
 
     public void setCourse(String course) {
         this.course = course;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

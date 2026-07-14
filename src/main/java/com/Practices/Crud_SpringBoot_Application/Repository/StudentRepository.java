@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<student, Long> {
-    Optional<CreateStudentResponseDto> findByIdAndDeletedIsFalse(Long id);
+    Optional<student> findByIdAndDeletedIsFalse(Long id);
     List<student>  findByDeletedIsFalse();
 
    boolean existsByEmail(String email);

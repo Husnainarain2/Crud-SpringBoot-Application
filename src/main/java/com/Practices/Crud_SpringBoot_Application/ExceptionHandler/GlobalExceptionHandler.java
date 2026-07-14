@@ -3,16 +3,19 @@ package com.Practices.Crud_SpringBoot_Application.ExceptionHandler;
 import com.Practices.Crud_SpringBoot_Application.Dto.ExceptionResponseDto;
 import com.Practices.Crud_SpringBoot_Application.Dto.ValidationExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
 @ExceptionHandler(ResourcesNotFoundException.class)
